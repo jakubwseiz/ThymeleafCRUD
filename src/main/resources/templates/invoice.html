@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html xmlns:th="http://www.thymeleaf.org">
+        <head>
+        <title>Invoice Details</title>
+</head>
+<body>
+<h1>Invoice Details</h1>
+<table>
+    <tr>
+        <th>Invoice Number:</th>
+        <td th:text="${invoice.invoiceNumber}"></td>
+    </tr>
+    <tr>
+        <th>Date:</th>
+        <td th:text="${invoice.date}"></td>
+    </tr>
+    <tr>
+        <th>Amount:</th>
+        <td th:text="${invoice.amount}"></td>
+    </tr>
+</table>
+
+<h2>Items</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Item Name</th>
+        <th>Item Amount</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${invoice.items}">
+        <td th:text="${item.itemName}"></td>
+        <td th:text="${item.itemAmount}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/thymleaf-invoices}">Back to Invoices</a>
+</body>
+</html>
+</title>
+</head>
+<body>
+
+</body>
+</html>
