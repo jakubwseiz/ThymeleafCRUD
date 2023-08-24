@@ -12,17 +12,20 @@
     <form th:action="@{/invoices/add}" method="post" id="invoiceForm">
         <div class="form-group">
             <label for="invoiceNumber">Invoice Number:</label>
-            <input type="text" class="form-control" id="invoiceNumber" name="invoiceNumber" />
+            <input type="text" class="form-control" id="invoiceNumber" name="invoiceNumber" required />
+            <div class="invalid-feedback">Invoice Number is required.</div>
         </div>
 
         <div class="form-group">
             <label for="date">Date:</label>
-            <input type="date" class="form-control" id="date" name="date" />
+            <input type="date" class="form-control" id="date" name="date" required />
+            <div class="invalid-feedback">Date is required.</div>
         </div>
 
         <div class="form-group">
             <label for="amount">Amount:</label>
-            <input type="text" class="form-control" id="amount" name="amount" />
+            <input type="text" class="form-control" id="amount" name="amount" required />
+            <div class="invalid-feedback">Amount is required.</div>
         </div>
 
         <!-- Dynamically generate form fields for items -->
@@ -30,10 +33,10 @@
         <div id="itemsContainer">
             <div class="item">
                 <label>Item Name:</label>
-                <input type="text" class="form-control" name="itemNames" />
+                <input type="text" class="form-control" name="itemNames" required />
 
                 <label>Item Amount:</label>
-                <input type="text" class="form-control" name="itemAmounts" />
+                <input type="text" class="form-control" name="itemAmounts" required />
             </div>
         </div>
 
@@ -59,17 +62,21 @@
             newItemDiv.classList.add("item");
             newItemDiv.innerHTML = `
                 <label>Item Name:</label>
-                <input type="text" class="form-control" name="itemNames" />
+                <input type="text" class="form-control" name="itemNames" required />
 
                 <label>Item Amount:</label>
-                <input type="text" class="form-control" name="itemAmounts" />
+                <input type="text" class="form-control" name="itemAmounts" required />
             `;
             itemsContainer.appendChild(newItemDiv);
         });
 
         addInvoiceBtn.addEventListener("click", function() {
             const form = document.getElementById("invoiceForm");
-            form.submit();
+            if (form.checkValidity()) {
+                form.submit();
+            } else {
+                form.classList.add('was-validated');
+            }
         });
     });
 </script>
