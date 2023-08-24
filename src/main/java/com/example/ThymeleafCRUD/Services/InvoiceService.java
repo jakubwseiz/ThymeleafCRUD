@@ -25,7 +25,7 @@ public class InvoiceService {
         return invoiceRepository.findById(id).orElse(null);
     }
 
-    public Invoice createInvoice(Invoice invoice) {
+    public Invoice addInvoice(Invoice invoice) {
         return invoiceRepository.save(invoice);
     }
 

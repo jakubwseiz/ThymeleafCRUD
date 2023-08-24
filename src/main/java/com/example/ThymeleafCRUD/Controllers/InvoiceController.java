@@ -30,8 +30,8 @@ public class InvoiceController {
     }
 
     @PostMapping
-    public Invoice createInvoice(@RequestBody Invoice invoice) {
-        return invoiceService.createInvoice(invoice);
+    public Invoice addInvoice(@RequestBody Invoice invoice) {
+        return invoiceService.addInvoice(invoice);
     }
 
     @PutMapping("/{id}")
