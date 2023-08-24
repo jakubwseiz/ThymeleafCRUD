@@ -14,7 +14,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/invoices")
+@RequestMapping("/invoices-base")
 public class InvoiceController {
     @Autowired
     private InvoiceService invoiceService;
@@ -53,6 +53,7 @@ public class InvoiceController {
     public void removeItemFromInvoice(@PathVariable Long itemId) {
         invoiceService.removeItemFromInvoice(itemId);
     }
+
 }
 
 

@@ -16,7 +16,7 @@ public class InvoiceItem {
 
     @ManyToOne
     @JoinColumn(name = "invoice_id")
-    @JsonBackReference  // Use this annotation to manage serialization
+    @JsonBackReference
     private Invoice invoice;
 
     public InvoiceItem() {

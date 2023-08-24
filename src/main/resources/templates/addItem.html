@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Item to Invoice</title>
+</head>
+<body>
+<h1>Add Item to Invoice</h1>
+<form th:action="@{/invoices/{id}/items(id=${invoice.id})}" th:object="${newItem}" method="post">
+    <label for="itemName">Item Name:</label>
+    <input type="text" id="itemName" th:field="*{itemName}" /><br />
+
+    <label for="itemAmount">Item Amount:</label>
+    <input type="text" id="itemAmount" th:field="*{itemAmount}" /><br />
+
+    <button type="submit">Add Item</button>
+</form>
+<a th:href="@{/invoices}">Back to Invoices</a>
+</body>
+</html>

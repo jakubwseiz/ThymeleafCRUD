@@ -3,6 +3,8 @@ package com.example.ThymeleafCRUD.Entities;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +16,11 @@ public class Invoice {
     private Long id;
     private String invoiceNumber;
     private LocalDate date;
-    private double amount;
+    @NotNull
+    private Double amount;
 
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference  // Use this annotation to manage serialization
+    @JsonManagedReference
     private List<InvoiceItem> items = new ArrayList<>();
 
     // getters, setters

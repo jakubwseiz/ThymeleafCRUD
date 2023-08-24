@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Invoice</title>
+    <!-- Include Bootstrap CSS and JavaScript -->
+</head>
+<body>
+<h1>Add Invoice</h1>
+
+<form th:action="@{/invoices/add}" method="post">
+    <label for="invoiceNumber">Invoice Number:</label>
+    <input type="text" id="invoiceNumber" name="invoiceNumber" /><br />
+
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date" /><br />
+
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" name="amount" /><br />
+
+    <!-- Dynamically generate form fields for items -->
+    <h2>Items</h2>
+    <div th:each="item, itemStat : ${newInvoice.items}">
+        <div>
+            <label th:for="${'items[' + itemStat.index + '].itemName'}">Item Name:</label>
+            <input type="text" th:id="${'items[' + itemStat.index + '].itemName'}" th:name="${'items[' + itemStat.index + '].itemName'}" /><br />
+
+            <label th:for="${'items[' + itemStat.index + '].itemAmount'}">Item Amount:</label>
+            <input type="number" th:id="${'items[' + itemStat.index + '].itemAmount'}" th:name="${'items[' + itemStat.index + '].itemAmount'}" /><br />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Invoice</button>
+</form>
+
+<a th:href="@{/invoices}">Back to Invoices</a>
+
+<!-- Include Bootstrap JS and other JavaScript code if needed -->
+</body>
+</html>

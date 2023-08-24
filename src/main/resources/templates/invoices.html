@@ -11,7 +11,7 @@
         <th>Invoice Number</th>
         <th>Date</th>
         <th>Amount</th>
-        <th>Items</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -20,10 +20,14 @@
         <td th:text="${invoice.date}"></td>
         <td th:text="${invoice.amount}"></td>
         <td>
-            <a th:href="@{/thymleaf-invoices/{id}(id=${invoice.id})}">View</a>
+            <a th:href="@{/invoices/{id}(id=${invoice.id})}">View</a>
+            <a th:href="@{/invoices/update/{id}(id=${invoice.id})}">Edit</a>
+            <a th:href="@{/invoices/delete/{id}(id=${invoice.id})}">Delete</a>
+            <a th:href="@{/invoices/{id}/items(id=${invoice.id})}">Add Item</a>
         </td>
     </tr>
     </tbody>
 </table>
+<a th:href="@{/invoices/add}" class="btn btn-primary">Add Invoice with Items</a>
 </body>
 </html>
