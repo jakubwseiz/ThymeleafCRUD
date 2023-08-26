@@ -17,7 +17,7 @@ public class Invoice {
     private String invoiceNumber;
     private LocalDate date;
     @NotNull
-    private Double amount;
+    private Float amount;
 
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
@@ -28,7 +28,7 @@ public class Invoice {
     public Invoice() {
     }
 
-    public Invoice(Long id, String invoiceNumber, LocalDate date, double amount, List<InvoiceItem> items) {
+    public Invoice(Long id, String invoiceNumber, LocalDate date, float amount, List<InvoiceItem> items) {
         this.id = id;
         this.invoiceNumber = invoiceNumber;
         this.date = date;
@@ -60,11 +60,11 @@ public class Invoice {
         this.date = date;
     }
 
-    public double getAmount() {
+    public Float getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 

@@ -24,7 +24,7 @@
 
         <div class="form-group">
             <label for="amount">Amount:</label>
-            <input type="text" class="form-control" id="amount" name="amount" required />
+            <input type="number" class="form-control" id="amount" name="amount" required />
             <div class="invalid-feedback">Amount is required.</div>
         </div>
 
@@ -36,19 +36,20 @@
                 <input type="text" class="form-control" name="itemNames" required />
 
                 <label>Item Amount:</label>
-                <input type="text" class="form-control" name="itemAmounts" required />
+                <input type="number" class="form-control" name="itemAmounts" required />
+
+                <button type="button" class="btn btn-danger mt-2" id="removeItemBtn">Remove Item</button>
             </div>
         </div>
 
         <button type="button" class="btn btn-secondary mt-2" id="addItemBtn">Add Item</button>
 
-        <button type="button" class="btn btn-primary mt-2" id="addInvoiceBtn">Add Invoice</button>
+        <button type="submit" class="btn btn-primary mt-2" id="addInvoiceBtn">Add Invoice</button>
     </form>
 
     <a th:href="@{/invoices}" class="mt-2">Back to Invoices</a>
 </div>
 
-<!-- Include Bootstrap JS and other JavaScript code -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script th:inline="javascript">
@@ -57,7 +58,7 @@
         const itemsContainer = document.getElementById("itemsContainer");
         const addInvoiceBtn = document.getElementById("addInvoiceBtn");
 
-        addItemBtn.addEventListener("click", function() {
+        function createItemDiv() {
             const newItemDiv = document.createElement("div");
             newItemDiv.classList.add("item");
             newItemDiv.innerHTML = `
@@ -65,17 +66,55 @@
                 <input type="text" class="form-control" name="itemNames" required />
 
                 <label>Item Amount:</label>
-                <input type="text" class="form-control" name="itemAmounts" required />
+                <input type="number" class="form-control" name="itemAmounts" required />
+
+                <button type="button" class="btn btn-danger mt-2 remove-item-btn">Remove Item</button>
             `;
+
+            newItemDiv.querySelector(".remove-item-btn").addEventListener("click", function() {
+                newItemDiv.remove();
+            });
+
+            return newItemDiv;
+        }
+
+        addItemBtn.addEventListener("click", function() {
+            const newItemDiv = createItemDiv();
             itemsContainer.appendChild(newItemDiv);
         });
 
         addInvoiceBtn.addEventListener("click", function() {
             const form = document.getElementById("invoiceForm");
             if (form.checkValidity()) {
-                form.submit();
-            } else {
-                form.classList.add('was-validated');
+                const invoiceData = {
+                    invoiceNumber: document.getElementById("invoiceNumber").value,
+                    date: document.getElementById("date").value,
+                    amount: parseFloat(document.getElementById("amount").value),
+                    items: []
+                };
+
+                const itemDivs = document.querySelectorAll(".item");
+                itemDivs.forEach(itemDiv => {
+                    const itemName = itemDiv.querySelector("input[name='itemNames']").value;
+                    const itemAmount = parseFloat(itemDiv.querySelector("input[name='itemAmounts']").value);
+                    invoiceData.items.push({ itemName, itemAmount });
+                });
+
+                fetch('/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(invoiceData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the server response if needed
+                    console.log("Server response:", data);
+                })
+                .catch(error => {
+                    console.error("Error sending data:", error);
+                });
             }
         });
     });

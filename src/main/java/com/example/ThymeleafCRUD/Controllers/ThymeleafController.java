@@ -41,25 +41,28 @@ public class ThymeleafController {
         return "addInvoice"; // Use the appropriate template name
     }
     @PostMapping("/add")
-    public String addInvoice(@ModelAttribute Invoice newInvoice) {
+    public String addInvoice(@ModelAttribute Invoice invoiceData) {
         // Create new Invoice entity and set associated items
-        Invoice invoice = new Invoice();
-        invoice.setInvoiceNumber(newInvoice.getInvoiceNumber());
-        invoice.setDate(newInvoice.getDate());
-        invoice.setAmount(newInvoice.getAmount());
+        Invoice newInvoice = new Invoice();
+        newInvoice.setInvoiceNumber(invoiceData.getInvoiceNumber());
+        newInvoice.setDate(invoiceData.getDate());
+
+        if (invoiceData.getAmount() != null) {
+            newInvoice.setAmount(invoiceData.getAmount());
+        }
 
         List<InvoiceItem> items = new ArrayList<>();
         for (InvoiceItem newItem : newInvoice.getItems()) {
             InvoiceItem item = new InvoiceItem();
             item.setItemName(newItem.getItemName());
             item.setItemAmount(newItem.getItemAmount());
-            item.setInvoice(invoice);
+            item.setInvoice(newInvoice);
             items.add(item);
         }
-        invoice.setItems(items);
+        newInvoice.setItems(items);
 
         // Save the new entities to the database
-        invoiceService.addInvoice(invoice);
+        invoiceService.addInvoice(newInvoice);
 
         return "redirect:/invoices"; // Redirect to the invoices list
     }
