@@ -1,6 +1,9 @@
 package com.example.ThymeleafCRUD.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 
 @Entity
 public class InvoiceItem {
@@ -8,21 +11,20 @@ public class InvoiceItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String itemName;
-    private double price;
+    private BigDecimal itemAmount;
 
     @ManyToOne
     @JoinColumn(name = "invoice_id")
+    @JsonBackReference
     private Invoice invoice;
-
-    // getters, setters
 
     public InvoiceItem() {
     }
 
-    public InvoiceItem(Long id, String itemName, double price, Invoice invoice) {
+    public InvoiceItem(Long id, String itemName, BigDecimal itemAmount, Invoice invoice) {
         this.id = id;
         this.itemName = itemName;
-        this.price = price;
+        this.itemAmount = itemAmount;
         this.invoice = invoice;
     }
 
@@ -42,12 +44,12 @@ public class InvoiceItem {
         this.itemName = itemName;
     }
 
-    public double getPrice() {
-        return price;
+    public BigDecimal getItemAmount() {
+        return itemAmount;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setItemAmount(BigDecimal itemAmount) {
+        this.itemAmount = itemAmount;
     }
 
     public Invoice getInvoice() {
@@ -58,3 +60,4 @@ public class InvoiceItem {
         this.invoice = invoice;
     }
 }
+

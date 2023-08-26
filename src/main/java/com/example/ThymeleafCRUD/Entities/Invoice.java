@@ -1,8 +1,12 @@
 package com.example.ThymeleafCRUD.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,17 +16,19 @@ public class Invoice {
     private Long id;
     private String invoiceNumber;
     private LocalDate date;
-    private double amount;
+    @NotNull
+    private Float amount;
 
-    @OneToMany(mappedBy = "invoice")
-    private List<InvoiceItem> items;
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<InvoiceItem> items = new ArrayList<>();
 
     // getters, setters
 
     public Invoice() {
     }
 
-    public Invoice(Long id, String invoiceNumber, LocalDate date, double amount, List<InvoiceItem> items) {
+    public Invoice(Long id, String invoiceNumber, LocalDate date, float amount, List<InvoiceItem> items) {
         this.id = id;
         this.invoiceNumber = invoiceNumber;
         this.date = date;
@@ -54,11 +60,11 @@ public class Invoice {
         this.date = date;
     }
 
-    public double getAmount() {
+    public Float getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 

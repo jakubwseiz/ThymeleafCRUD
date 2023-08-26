@@ -1,5 +1,6 @@
 package com.example.ThymeleafCRUD;
 
+import com.example.ThymeleafCRUD.Entities.Invoice;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
