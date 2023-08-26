@@ -1,15 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title><!DOCTYPE html>
-        <html xmlns:th="http://www.thymeleaf.org">
-        <head>
-        <title>Invoice Details</title>
+    <title>Invoice</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 <h1>Invoice Details</h1>
-<table>
+<table class="table">
     <tr>
         <th>Invoice Number:</th>
         <td th:text="${invoice.invoiceNumber}"></td>
@@ -25,7 +22,7 @@
 </table>
 
 <h2>Items</h2>
-<table>
+<table class="table">
     <thead>
     <tr>
         <th>Item Name</th>
@@ -41,11 +38,5 @@
 </table>
 
 <a th:href="@{/invoices}">Back to Invoices</a>
-</body>
-</html>
-</title>
-</head>
-<body>
-
 </body>
 </html>

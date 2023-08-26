@@ -38,7 +38,7 @@ public class ThymeleafController {
         newInvoice.setItems(new ArrayList<>());
         newInvoice.getItems().add(new InvoiceItem()); // Add an initial empty item
         model.addAttribute("newInvoice", newInvoice);
-        return "addInvoice"; // Use the appropriate template name
+        return "addInvoice";
     }
     @PostMapping("/add")
     public String addInvoice(@ModelAttribute Invoice invoiceData) {
@@ -52,10 +52,10 @@ public class ThymeleafController {
         }
 
         List<InvoiceItem> items = new ArrayList<>();
-        for (InvoiceItem newItem : newInvoice.getItems()) {
+        for (InvoiceItem newItem : invoiceData.getItems()) {
             InvoiceItem item = new InvoiceItem();
-            item.setItemName(newItem.getItemName());
-            item.setItemAmount(newItem.getItemAmount());
+            item.setItemName(newItem.getItemName());       // Use newItem.getName() here
+            item.setItemAmount(newItem.getItemAmount());   // Use newItem.getAmount() here
             item.setInvoice(newInvoice);
             items.add(item);
         }
@@ -64,7 +64,7 @@ public class ThymeleafController {
         // Save the new entities to the database
         invoiceService.addInvoice(newInvoice);
 
-        return "redirect:/invoices"; // Redirect to the invoices list
+        return "redirect:/invoices";
     }
 
 }
