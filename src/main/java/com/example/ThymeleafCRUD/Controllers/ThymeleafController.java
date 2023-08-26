@@ -66,5 +66,11 @@ public class ThymeleafController {
 
         return "redirect:/invoices";
     }
+    @GetMapping("/delete/{id}")
+    public String deleteInvoice(@PathVariable Long id) {
+        invoiceService.deleteInvoice(id);
+
+        return "redirect:/invoices";
+    }
 
 }
