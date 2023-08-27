@@ -35,7 +35,8 @@ public class ThymeleafController {
 
     @GetMapping("/update/{id}")
     public String showUpdateInvoiceForm(@PathVariable Long id, Model model) {
-        model.addAttribute("updateInvoice", invoiceService.getInvoiceById(id));
+        Invoice updateInvoice = invoiceService.getInvoiceById(id);
+        model.addAttribute("updateInvoice", updateInvoice);
         return "updateInvoice";
     }
 

@@ -7,6 +7,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,8 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String invoiceNumber;
-    private LocalDate date;
+    @Temporal(TemporalType.DATE)
+    private Date date;
     @NotNull
     private Float amount;
 
@@ -28,7 +30,7 @@ public class Invoice {
     public Invoice() {
     }
 
-    public Invoice(Long id, String invoiceNumber, LocalDate date, float amount, List<InvoiceItem> items) {
+    public Invoice(Long id, String invoiceNumber, Date date, float amount, List<InvoiceItem> items) {
         this.id = id;
         this.invoiceNumber = invoiceNumber;
         this.date = date;
@@ -52,11 +54,11 @@ public class Invoice {
         this.invoiceNumber = invoiceNumber;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

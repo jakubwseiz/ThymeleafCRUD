@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Invoice</title>
+    <title>Update Invoice</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
@@ -24,7 +24,19 @@
 
     <h3>Items</h3>
     <div id="items-container">
-        <!-- Add JavaScript logic to populate items here if needed -->
+        <div th:each="item, itemStat : *{items}">
+            <div class="item-row">
+                <div class="form-group">
+                    <label th:for="${'item-' + itemStat.index + '-name'}">Item Name</label>
+                    <input type="text" class="form-control" th:name="*{items[__${itemStat.index}__].itemName}" th:value="${item.itemName}" id="${'item-' + itemStat.index + '-name'}" required>
+                </div>
+                <div class="form-group">
+                    <label th:for="${'item-' + itemStat.index + '-amount'}">Price</label>
+                    <input type="number" class="form-control" th:name="*{items[__${itemStat.index}__].itemAmount}" th:value="${item.itemAmount}" id="${'item-' + itemStat.index + '-amount'}" required>
+                </div>
+                <button type="button" class="btn btn-danger" onclick="removeItem(this)">Remove</button>
+            </div>
+        </div>
     </div>
     <button type="button" class="btn btn-primary" onclick="addItem()">Add Item</button>
 
@@ -32,14 +44,14 @@
 </form>
 <a th:href="@{/invoices}" class="mt-2">Back to Invoices</a>
 <script th:inline="javascript">
-    var itemCounter = 0;
+    var itemCounter = 2;
 
     function addItem() {
         var itemRow = document.createElement("div");
         itemRow.className = "item-row";
         itemRow.innerHTML = `
             <div class="form-group">
-                <label for="newInvoice.items[${itemCounter}].itemName">Item Name</label>
+                <label for="items[${itemCounter}].itemName">Item Name</label>
                 <input type="text" class="form-control" id="items[${itemCounter}].itemName" name="items[${itemCounter}].itemName" required>
 
             </div>
