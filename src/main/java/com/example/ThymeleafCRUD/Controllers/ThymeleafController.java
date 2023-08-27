@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -39,7 +41,13 @@ public class ThymeleafController {
         model.addAttribute("updateInvoice", updateInvoice);
         return "updateInvoice";
     }
+    @PostMapping("/update/{id}")
+    public String updateInvoice(@PathVariable Long id, @ModelAttribute("updateInvoice") Invoice updatedInvoice) {
+        updatedInvoice.setId(id);
+        invoiceService.updateInvoice(updatedInvoice);
 
+        return "redirect:/invoices";
+    }
 
     @GetMapping("/add")
     public String showAddInvoiceForm(Model model) {
@@ -52,6 +60,8 @@ public class ThymeleafController {
     @PostMapping("/add")
     public String addInvoice(@ModelAttribute Invoice invoiceData) {
         // Create new Invoice entity and set associated items
+
+
         Invoice newInvoice = new Invoice();
         newInvoice.setInvoiceNumber(invoiceData.getInvoiceNumber());
         newInvoice.setDate(invoiceData.getDate());
@@ -70,7 +80,6 @@ public class ThymeleafController {
         }
         newInvoice.setItems(items);
 
-        // Save the new entities to the database
         invoiceService.addInvoice(newInvoice);
 
         return "redirect:/invoices";

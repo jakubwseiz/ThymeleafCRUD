@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,8 +17,8 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String invoiceNumber;
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate date;
     @NotNull
     private Float amount;
 
@@ -30,7 +31,7 @@ public class Invoice {
     public Invoice() {
     }
 
-    public Invoice(Long id, String invoiceNumber, Date date, float amount, List<InvoiceItem> items) {
+    public Invoice(Long id, String invoiceNumber, LocalDate date, float amount, List<InvoiceItem> items) {
         this.id = id;
         this.invoiceNumber = invoiceNumber;
         this.date = date;
@@ -54,11 +55,11 @@ public class Invoice {
         this.invoiceNumber = invoiceNumber;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
