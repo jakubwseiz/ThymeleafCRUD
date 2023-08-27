@@ -36,7 +36,7 @@ public class InvoiceController {
 
     @PutMapping("/{id}")
     public Invoice updateInvoice(@PathVariable Long id, @RequestBody Invoice updatedInvoice) {
-        return invoiceService.updateInvoice(id, updatedInvoice);
+        return invoiceService.updateInvoice(updatedInvoice);
     }
 
     @DeleteMapping("/{id}")

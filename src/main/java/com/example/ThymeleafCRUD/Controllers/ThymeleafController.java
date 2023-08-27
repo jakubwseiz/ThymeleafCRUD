@@ -4,6 +4,7 @@ import com.example.ThymeleafCRUD.Entities.Invoice;
 import com.example.ThymeleafCRUD.Entities.InvoiceItem;
 import com.example.ThymeleafCRUD.Services.InvoiceService;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,13 @@ public class ThymeleafController {
         return "invoice";
     }
 
+    @GetMapping("/update/{id}")
+    public String showUpdateInvoiceForm(@PathVariable Long id, Model model) {
+        model.addAttribute("updateInvoice", invoiceService.getInvoiceById(id));
+        return "updateInvoice";
+    }
+
+
     @GetMapping("/add")
     public String showAddInvoiceForm(Model model) {
         Invoice newInvoice = new Invoice();
@@ -54,8 +62,8 @@ public class ThymeleafController {
         List<InvoiceItem> items = new ArrayList<>();
         for (InvoiceItem newItem : invoiceData.getItems()) {
             InvoiceItem item = new InvoiceItem();
-            item.setItemName(newItem.getItemName());       // Use newItem.getName() here
-            item.setItemAmount(newItem.getItemAmount());   // Use newItem.getAmount() here
+            item.setItemName(newItem.getItemName());
+            item.setItemAmount(newItem.getItemAmount());
             item.setInvoice(newInvoice);
             items.add(item);
         }

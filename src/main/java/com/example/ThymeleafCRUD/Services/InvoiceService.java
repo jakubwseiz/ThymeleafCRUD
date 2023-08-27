@@ -29,12 +29,9 @@ public class InvoiceService {
         return invoiceRepository.save(invoice);
     }
 
-    public Invoice updateInvoice(Long id, Invoice updatedInvoice) {
-        if (invoiceRepository.existsById(id)) {
-            updatedInvoice.setId(id);
-            return invoiceRepository.save(updatedInvoice);
-        }
-        return null;
+    public Invoice updateInvoice(Invoice updatedInvoice) {
+        return invoiceRepository.save(updatedInvoice);
+
     }
 
     public void deleteInvoice(Long id) {
