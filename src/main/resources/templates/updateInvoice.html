@@ -28,12 +28,12 @@
         <div th:each="item, itemStat : *{items}">
             <div class="item-row">
                 <div class="form-group">
-                    <label th:for="${'item-' + itemStat.index + '-name'}">Item Name</label>
-                    <input type="text" class="form-control" th:name="*{items[__${itemStat.index}__].itemName}" th:value="${item.itemName}" id="${'item-' + itemStat.index + '-name'}" required>
+                    <label th:for="${items[__${itemStat.index}__].itemName}">Item Name</label>
+                    <input type="text" class="form-control" th:name="*{items[__${itemStat.index}__].itemName}" th:value="${item.itemName}" id="${items[__${itemStat.index}__].itemName}" required>
                 </div>
                 <div class="form-group">
-                    <label th:for="${'item-' + itemStat.index + '-amount'}">Price</label>
-                    <input type="number" class="form-control" th:name="*{items[__${itemStat.index}__].itemAmount}" th:value="${item.itemAmount}" id="${'item-' + itemStat.index + '-amount'}" required>
+                    <label th:for="${items[__${itemStat.index}__].itemAmount}">Price</label>
+                    <input type="number" class="form-control" th:name="*{items[__${itemStat.index}__].itemAmount}" th:value="${item.itemAmount}" id="${items[__${itemStat.index}__].itemAmount}" required>
                 </div>
                 <button type="button" class="btn btn-danger" onclick="removeItem(this)">Remove</button>
             </div>
@@ -45,25 +45,25 @@
 </form>
 <a th:href="@{/invoices}" class="mt-2">Back to Invoices</a>
 <script th:inline="javascript">
-    var itemCounter = 2;
-
     function addItem() {
+        var itemCount = /*[[${itemCount}]]*/;
         var itemRow = document.createElement("div");
         itemRow.className = "item-row";
+
         itemRow.innerHTML = `
             <div class="form-group">
-                <label for="items[${itemCounter}].itemName">Item Name</label>
-                <input type="text" class="form-control" id="items[${itemCounter}].itemName" name="items[${itemCounter}].itemName" required>
-
+                <label th:for="'items[' + ${itemCount} + '].itemName'">Item Name</label>
+                <input type="text" class="form-control" th:name="'items[' + ${itemCount} + '].itemName'" required>
             </div>
             <div class="form-group">
-                <label for="items[${itemCounter}].itemAmount">Price</label>
-                <input type="number" class="form-control" id="items[${itemCounter}].itemAmount" name="items[${itemCounter}].itemAmount" required>
+                <label th:for="'items[' + ${itemCount} + '].itemAmount'">Price</label>
+                <input type="number" class="form-control" th:name="'items[' + ${itemCount} + '].itemAmount'" required>
             </div>
             <button type="button" class="btn btn-danger" onclick="removeItem(this)">Remove</button>
         `;
         document.getElementById("items-container").appendChild(itemRow);
-        itemCounter++;
+        itemCount++;
+        /*[[${itemCount}]]*/ = itemCount; // Update the itemCount value
     }
 
     function removeItem(button) {
