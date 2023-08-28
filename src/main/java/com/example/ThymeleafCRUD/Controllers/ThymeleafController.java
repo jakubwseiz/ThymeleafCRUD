@@ -42,6 +42,7 @@ public class ThymeleafController {
 
         model.addAttribute("updateInvoice", updateInvoice);
         model.addAttribute("items", items);
+        model.addAttribute("itemSize", items.size());
         return "updateInvoice";
     }
     @PostMapping("/update/{id}")

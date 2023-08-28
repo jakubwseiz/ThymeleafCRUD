@@ -33,21 +33,23 @@
     <button type="submit">Save Changes</button>
 </form>
 
-<a th:href="@{/}">Back to Invoices</a>
+<a th:href="@{/invoices}">Back to Invoices</a>
 <script th:inline="javascript">
     function removeItem(button) {
         var row = button.parentNode.parentNode;
         row.parentNode.removeChild(row);
     }
+    var currentItemCount = /*[[${itemSize}]]*/;
 
-    function addItem() {
+    function addItem(currentItemCount) {
         var table = document.getElementById('itemsTable');
         var newRow = table.insertRow();
         newRow.innerHTML = `
-            <td><input type="text" name="items[__${updateInvoice.items.size()}__].itemName"/></td>
-            <td><input type="number" name="items[__${updateInvoice.items.size()}__].itemAmount"/></td>
+            <td><input type="text" name="items[__${currentItemCount}__].itemName"/></td>
+            <td><input type="number" name="items[__${currentItemCount}__].itemAmount"/></td>
             <td><button type="button" class="btn btn-danger" onclick="removeItem(this)">Remove</button></td>
         `;
+
     }
 </script>
 </body>
