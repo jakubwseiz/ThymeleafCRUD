@@ -38,6 +38,10 @@ public class InvoiceService {
         invoiceRepository.deleteById(id);
     }
 
+    public InvoiceItem getItemById(Long id) {
+        return invoiceItemRepository.findById(id).orElse(null);
+    }
+
     public Invoice addItemToInvoice(Long invoiceId, InvoiceItem item) {
         Invoice invoice = invoiceRepository.findById(invoiceId).orElse(null);
         if (invoice != null) {

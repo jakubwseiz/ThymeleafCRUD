@@ -38,12 +38,35 @@ public class ThymeleafController {
     @GetMapping("/update/{id}")
     public String showUpdateInvoiceForm(@PathVariable Long id, Model model) {
         Invoice updateInvoice = invoiceService.getInvoiceById(id);
+        List<InvoiceItem> items = updateInvoice.getItems();
+
         model.addAttribute("updateInvoice", updateInvoice);
+        model.addAttribute("items", items);
+        model.addAttribute("itemSize", items.size());
         return "updateInvoice";
     }
     @PostMapping("/update/{id}")
-    public String updateInvoice(@PathVariable Long id, @ModelAttribute("updateInvoice") Invoice updatedInvoice) {
+    public String updateInvoice(@PathVariable Long id, @ModelAttribute("updateInvoice") Invoice invoiceData) {
+
+
+        Invoice updatedInvoice = new Invoice();
         updatedInvoice.setId(id);
+        updatedInvoice.setInvoiceNumber(invoiceData.getInvoiceNumber());
+        updatedInvoice.setDate(invoiceData.getDate());
+
+        if (invoiceData.getAmount() != null) {
+            updatedInvoice.setAmount(invoiceData.getAmount());
+        }
+
+        List<InvoiceItem> items = new ArrayList<>();
+        for (InvoiceItem newItem : invoiceData.getItems()) {
+            InvoiceItem item = new InvoiceItem();
+            item.setItemName(newItem.getItemName());
+            item.setItemAmount(newItem.getItemAmount());
+            item.setInvoice(updatedInvoice);
+            items.add(item);
+        }
+        updatedInvoice.setItems(items);
         invoiceService.updateInvoice(updatedInvoice);
 
         return "redirect:/invoices";
