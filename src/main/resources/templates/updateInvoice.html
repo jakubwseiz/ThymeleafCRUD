@@ -38,6 +38,7 @@
     function removeItem(button) {
         var row = button.parentNode.parentNode;
         row.parentNode.removeChild(row);
+        itemCounter--;
     }
     var itemCounter = /*[[${itemSize}]]*/;
 
