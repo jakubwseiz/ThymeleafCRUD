@@ -61,6 +61,9 @@ public class ThymeleafController {
         List<InvoiceItem> items = new ArrayList<>();
         for (InvoiceItem newItem : invoiceData.getItems()) {
             InvoiceItem item = new InvoiceItem();
+            if (newItem.getItemName() == null) {
+                continue;
+            }
             item.setItemName(newItem.getItemName());
             item.setItemAmount(newItem.getItemAmount());
             item.setInvoice(updatedInvoice);
@@ -96,6 +99,9 @@ public class ThymeleafController {
         List<InvoiceItem> items = new ArrayList<>();
         for (InvoiceItem newItem : invoiceData.getItems()) {
             InvoiceItem item = new InvoiceItem();
+            if (newItem.getItemName() == null) {
+                continue;
+            }
             item.setItemName(newItem.getItemName());
             item.setItemAmount(newItem.getItemAmount());
             item.setInvoice(newInvoice);
