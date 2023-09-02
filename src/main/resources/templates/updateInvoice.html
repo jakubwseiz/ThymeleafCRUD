@@ -57,12 +57,19 @@
     }
 
     function addItem() {
-        var itemRow = document.createElement("tr"); // Zmieniono na <tr>
+        var itemRow = document.createElement("div");
         itemRow.className = "item-row";
         itemRow.innerHTML = `
-            <td><input type="text" th:field="*{items[__${itemCounter}__].itemName}"/></td>
-            <td><input type="number" th:field="*{items[__${itemCounter}__].itemAmount}"/></td>
-            <td><button type="button" class="btn btn-danger" onclick="removeItem(this)">Remove</button></td>
+            <div class="form-group">
+                <label for="items[__${itemCounter}__].itemName">Item Name</label>
+                <input type="text" class="form-control" id="items[${itemCounter}].itemName" name="items[${itemCounter}].itemName" required>
+
+            </div>
+            <div class="form-group">
+                <label for="items[__${itemCounter}__].itemAmount">Price</label>
+                <input type="number" class="form-control" id="items[${itemCounter}].itemAmount" name="items[${itemCounter}].itemAmount" required>
+            </div>
+            <button type="button" class="btn btn-danger" onclick="removeItem(this)">Remove</button>
         `;
         document.getElementById("itemsTable").appendChild(itemRow);
         itemCounter++;
