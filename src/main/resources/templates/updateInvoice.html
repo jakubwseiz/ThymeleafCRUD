@@ -11,7 +11,7 @@
     <input type="hidden" th:field="*{id}"/>
     Invoice Number: <input type="text" th:field="*{invoiceNumber}"/><br/>
     Date: <input type="date" th:field="*{date}"/><br/>
-    Amount: <input type="text" th:field="*{amount}"/><br/>
+    Amount: <input type="number" th:field="*{amount}"/><br/>
 
     <h2>Items</h2>
     <table id="itemsTable">
@@ -23,7 +23,7 @@
         <tr th:each="item, itemStat : ${updateInvoice.items}">
             <td><input type="text" th:field="*{items[__${itemStat.index}__].itemName}"/></td>
             <td><input type="number" th:field="*{items[__${itemStat.index}__].itemAmount}"/></td>
-            <td><button type="button" class="btn btn-danger" onclick="removeItem(this)">Remove</button></td>
+            <td><button type="button" class="btn btn-danger" id="remove[itemStat.index]" onclick="removeItem(this)">Remove</button></td>
         </tr>
     </table>
 
@@ -35,31 +35,40 @@
 
 <a th:href="@{/invoices}">Back to Invoices</a>
 <script th:inline="javascript">
+    var itemCounter = /*[[${itemSize}]]*/;
+
     function removeItem(button) {
         var row = button.parentNode.parentNode;
         row.parentNode.removeChild(row);
-        itemCounter--;
+
+        // Aktualizacja indeksów w atrybutach name w celu zachowania spójności z modelem
+        var itemRows = document.querySelectorAll(".item-row");
+        itemRows.forEach(function (row, index) {
+            var itemNameInput = row.querySelector("input[name*='itemName']");
+            var itemAmountInput = row.querySelector("input[name*='itemAmount']");
+
+            // Sprawdź, czy istnieje pole input
+            if (itemNameInput && itemAmountInput) {
+                // Zaktualizuj atrybuty name zgodnie z nowym indeksem
+                itemNameInput.setAttribute("name", "items[" + index + "].itemName");
+                itemAmountInput.setAttribute("name", "items[" + index + "].itemAmount");
+            }
+        });
     }
-    var itemCounter = /*[[${itemSize}]]*/;
 
     function addItem() {
-        var itemRow = document.createElement("div");
+        var itemRow = document.createElement("tr"); // Zmieniono na <tr>
         itemRow.className = "item-row";
         itemRow.innerHTML = `
-            <div class="form-group">
-                <label for="items[__${itemCounter}__].itemName">Item Name</label>
-                <input type="text" class="form-control" id="items[${itemCounter}].itemName" name="items[${itemCounter}].itemName" required>
-
-            </div>
-            <div class="form-group">
-                <label for="items[__${itemCounter}__].itemAmount">Price</label>
-                <input type="number" class="form-control" id="items[${itemCounter}].itemAmount" name="items[${itemCounter}].itemAmount" required>
-            </div>
-            <button type="button" class="btn btn-danger" onclick="removeItem(this)">Remove</button>
+            <td><input type="text" th:field="*{items[__${itemCounter}__].itemName}"/></td>
+            <td><input type="number" th:field="*{items[__${itemCounter}__].itemAmount}"/></td>
+            <td><button type="button" class="btn btn-danger" onclick="removeItem(this)">Remove</button></td>
         `;
         document.getElementById("itemsTable").appendChild(itemRow);
         itemCounter++;
     }
 </script>
+
+
 </body>
 </html>
