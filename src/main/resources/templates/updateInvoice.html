@@ -9,9 +9,9 @@
 
 <form th:action="@{/invoices/update/{id}(id=${updateInvoice.id})}" th:object="${updateInvoice}" method="post">
     <input type="hidden" th:field="*{id}"/>
-    Invoice Number: <input type="text" th:field="*{invoiceNumber}"/><br/>
-    Date: <input type="date" th:field="*{date}"/><br/>
-    Amount: <input type="number" th:field="*{amount}"/><br/>
+    Invoice Number: <input type="text" th:field="*{invoiceNumber}" required/><br/>
+    Date: <input type="date" th:field="*{date}" required/><br/>
+    Amount: <input type="number" th:field="*{amount}" required/><br/>
 
     <h2>Items</h2>
     <table id="itemsTable">
