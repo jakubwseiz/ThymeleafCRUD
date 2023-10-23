@@ -40,25 +40,11 @@
 
 <a th:href="@{/invoices}">Back to Invoices</a>
 <script th:inline="javascript">
-    var itemCounter = /*[[${itemSize}]]*/;
+    var itemCounter = /*[[${itemsSize}]]*/;
 
     function removeItem(button) {
         var row = button.parentNode.parentNode;
         row.parentNode.removeChild(row);
-
-<!--        // Aktualizacja indeksów w atrybutach name w celu zachowania spójności z modelem-->
-<!--        var itemRows = document.querySelectorAll(".item-row");-->
-<!--        itemRows.forEach(function (row, index) {-->
-<!--            var itemNameInput = row.querySelector("input[name*='itemName']");-->
-<!--            var itemAmountInput = row.querySelector("input[name*='itemAmount']");-->
-
-<!--            // Sprawdź, czy istnieje pole input-->
-<!--            if (itemNameInput && itemAmountInput) {-->
-<!--                // Zaktualizuj atrybuty name zgodnie z nowym indeksem-->
-<!--                itemNameInput.setAttribute("name", "items[" + index + "].itemName");-->
-<!--                itemAmountInput.setAttribute("name", "items[" + index + "].itemAmount");-->
-<!--            }-->
-<!--        });-->
     }
     function addItem() {
         itemCounter++;
@@ -72,10 +58,7 @@
         </tr>
         `;
         document.getElementById("itemsTable").appendChild(itemRow);
-
     }
 </script>
-
-
 </body>
 </html>

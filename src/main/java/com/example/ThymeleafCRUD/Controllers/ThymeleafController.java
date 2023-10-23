@@ -42,7 +42,7 @@ public class ThymeleafController {
 
         model.addAttribute("updateInvoice", updateInvoice);
         model.addAttribute("items", items);
-        model.addAttribute("itemSize", items.size());
+        model.addAttribute("itemsSize", items.size());
         return "updateInvoice";
     }
     @PostMapping("/update/{id}")
@@ -53,10 +53,7 @@ public class ThymeleafController {
         updatedInvoice.setId(id);
         updatedInvoice.setInvoiceNumber(invoiceData.getInvoiceNumber());
         updatedInvoice.setDate(invoiceData.getDate());
-
-        if (invoiceData.getAmount() != null) {
-            updatedInvoice.setAmount(invoiceData.getAmount());
-        }
+        updatedInvoice.setAmount(invoiceData.getAmount());
 
         List<InvoiceItem> items = new ArrayList<>();
         for (InvoiceItem newItem : invoiceData.getItems()) {
